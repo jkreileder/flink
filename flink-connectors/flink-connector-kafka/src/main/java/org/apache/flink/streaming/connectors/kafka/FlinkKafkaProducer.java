@@ -820,10 +820,11 @@ public class FlinkKafkaProducer<IN>
 
 		nextTransactionalIdHintState = context.getOperatorStateStore().getUnionListState(
 			NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR);
+		StreamingRuntimeContext runtimeContext = (StreamingRuntimeContext) getRuntimeContext();
 		transactionalIdsGenerator = new TransactionalIdsGenerator(
-			getRuntimeContext().getTaskName() + "-" + ((StreamingRuntimeContext) getRuntimeContext()).getOperatorUniqueID(),
-			getRuntimeContext().getIndexOfThisSubtask(),
-			getRuntimeContext().getNumberOfParallelSubtasks(),
+			runtimeContext.getJobID() + "-" + runtimeContext.getTaskName() + "-" + runtimeContext.getOperatorUniqueID(),
+			runtimeContext.getIndexOfThisSubtask(),
+			runtimeContext.getNumberOfParallelSubtasks(),
 			kafkaProducersPoolSize,
 			SAFE_SCALE_DOWN_FACTOR);
 

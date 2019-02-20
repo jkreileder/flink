@@ -19,6 +19,7 @@
 package org.apache.flink.streaming.api.operators;
 
 import org.apache.flink.annotation.Internal;
+import org.apache.flink.api.common.JobID;
 import org.apache.flink.api.common.accumulators.Accumulator;
 import org.apache.flink.api.common.functions.BroadcastVariableInitializer;
 import org.apache.flink.api.common.functions.util.AbstractRuntimeUDFContext;
@@ -100,6 +101,15 @@ public class StreamingRuntimeContext extends AbstractRuntimeUDFContext {
 	 */
 	public GlobalAggregateManager getGlobalAggregateManager() {
 		return taskEnvironment.getGlobalAggregateManager();
+	}
+
+	/**
+	 * Returns the ID of the current job.
+	 *
+	 * @return the ID of the job from the original job graph
+	 */
+	public JobID getJobID() {
+		return taskEnvironment.getJobID();
 	}
 
 	/**
